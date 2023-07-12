@@ -2,12 +2,14 @@
 import Search from '../components/Search.vue'
 import ProductCard from '../components/ProductCard.vue'
 
-import { onMounted, ref } from 'vue'
+import { ref } from 'vue'
 
 interface Product {
     id: string | number,
     description: string,
     price: number,
+    unit: string,
+    unitQty: number,
     image: string,
     vendor: string,
     accuracy?: number
@@ -33,6 +35,8 @@ const fetchSpaniProducts = async (searchText: string): Promise<Product[]> => {
             id: element.produto_id,
             description: element.descricao,
             price: element.preco,
+            unit: element.unidade_sigla,
+            unitQty: element.quantidade_unidade_diferente,
             image: `https://s3.amazonaws.com/produtos.vipcommerce.com.br/144x144/${element.imagem}`,
             vendor: 'spani'
         }
@@ -65,6 +69,8 @@ const fetchNagumoProducts = async (searchText: string): Promise<Product[]> => {
             id: element.idProduct,
             description: element.excerpt,
             price: element.prices[0].price,
+            unit: element.weight.includes('kg') ? 'kg' : 'UN',
+            unitQty: 1,
             image: element.image,
             vendor: 'nagumo'
         }
@@ -180,6 +186,8 @@ function filter(vendor: string) {
               <div class="content">
                 R${{ product.price }}
                 <br>
+                {{ product.unitQty }}
+                {{ product.unit }}
               </div>
             </div>
           </div>
