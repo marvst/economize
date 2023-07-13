@@ -1,20 +1,8 @@
 <script setup lang="ts">
-import Search from '../components/Search.vue'
 import ProductCard from '../components/ProductCard.vue'
 
 import { ref } from 'vue'
-
-interface Product {
-    id: string | number,
-    description: string,
-    price: number,
-    unit: string,
-    unitQty: number,
-    weight: string,
-    image: string,
-    vendor: string,
-    accuracy?: number
-}
+import type { Product } from '@/types';
 
 const fetchSpaniProducts = async (searchText: string): Promise<Product[]> => {
     const response = await fetch(`https://api.spanionline.com.br/v1/loja/buscas/produtos/filial/1/centro_distribuicao/9/termo/${searchText.split(' ').join('+')}?`, {
@@ -128,9 +116,13 @@ async function search() {
   loading.value = false
 
   searchedText.value = searchText.value
+
+  filter('spani')
+  activeTab.value = 'spani'
 }
 
 let filteredResults = ref<Product[] | null>(null);
+let activeTab = ref('spani')
 
 function filter(vendor: string) {
   if (results.value) {
@@ -165,8 +157,8 @@ function filter(vendor: string) {
     <div class="block">
       <div class="tabs">
         <ul>
-          <li><a @click="filter('spani')">Spani</a></li>
-          <li><a @click="filter('nagumo')">Nagumo</a></li>
+          <li :class="{'is-active': activeTab == 'spani'}"><a @click="filter('spani')">Spani</a></li>
+          <li :class="{'is-active': activeTab == 'nagumo'}"><a @click="filter('nagumo')">Nagumo</a></li>
         </ul>
       </div>
     </div>
@@ -174,24 +166,7 @@ function filter(vendor: string) {
       <div class="block" v-if="loading">Pesquisando...</div>
       <div class="columns is-multiline" v-if="!loading">
         <div class="column is-2" v-for="product in filteredResults">
-          <div class="card">
-            <div class="card-image">
-              <figure class="image is-4by3">
-                <img :src="product.image" alt="Product image">
-              </figure>
-            </div>
-            <div class="card-content">
-              <div class="media">
-                <div class="media-content">
-                  <p class="title is-6">{{ product.description }}</p>
-                </div>
-              </div>
-              <div class="content">
-                R${{ (product.price * 1) / product.unitQty }} / {{ product.unit.toUpperCase() }}
-                <br>
-              </div>
-            </div>
-          </div>
+          <ProductCard :product=product />
         </div>
       </div>
     </div>
