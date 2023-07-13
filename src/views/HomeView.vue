@@ -10,6 +10,7 @@ interface Product {
     price: number,
     unit: string,
     unitQty: number,
+    weight: string,
     image: string,
     vendor: string,
     accuracy?: number
@@ -37,6 +38,7 @@ const fetchSpaniProducts = async (searchText: string): Promise<Product[]> => {
             price: element.preco,
             unit: element.unidade_sigla,
             unitQty: element.quantidade_unidade_diferente,
+            weight: element.descricao.match(/\d+(kg|g)/g),
             image: `https://s3.amazonaws.com/produtos.vipcommerce.com.br/144x144/${element.imagem}`,
             vendor: 'spani'
         }
@@ -71,6 +73,7 @@ const fetchNagumoProducts = async (searchText: string): Promise<Product[]> => {
             price: element.prices[0].price,
             unit: element.weight.includes('kg') ? 'kg' : 'UN',
             unitQty: 1,
+            weight: element.weight,
             image: element.image,
             vendor: 'nagumo'
         }
@@ -188,6 +191,8 @@ function filter(vendor: string) {
                 <br>
                 {{ product.unitQty }}
                 {{ product.unit }}
+                <br>
+                {{ product.weight }}
               </div>
             </div>
           </div>
