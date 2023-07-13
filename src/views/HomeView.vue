@@ -187,12 +187,8 @@ function filter(vendor: string) {
                 </div>
               </div>
               <div class="content">
-                R${{ product.price }}
+                R${{ (product.price * 1) / product.unitQty }} / {{ product.unit.toUpperCase() }}
                 <br>
-                {{ product.unitQty }}
-                {{ product.unit }}
-                <br>
-                {{ product.weight }}
               </div>
             </div>
           </div>
