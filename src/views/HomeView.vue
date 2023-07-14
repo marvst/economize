@@ -141,12 +141,12 @@ function filter(vendor: string) {
             Pesquisar produto
           </p>
           <div class="columns">
-            <div class="column is-four-fifths">
-              <input type="text" v-model="searchText" class="input is-normal" placeholder="Pesquise pelo nome do produto" />
+            <div class="column is-full-height">
+              <input type="text" v-model="searchText" @keyup.enter="search" class="input is-normal" placeholder="Pesquise pelo nome do produto e aperte enter" />
             </div>
-            <div class="column">
+            <!-- <div class="column">
               <button class="button" @click="search">Pesquisar</button>
-            </div>
+            </div> -->
           </div>
         </div>
       </section>
@@ -157,8 +157,22 @@ function filter(vendor: string) {
     <div class="block">
       <div class="tabs">
         <ul>
-          <li :class="{'is-active': activeTab == 'spani'}"><a @click="filter('spani')">Spani</a></li>
-          <li :class="{'is-active': activeTab == 'nagumo'}"><a @click="filter('nagumo')">Nagumo</a></li>
+          <li :class="{'is-active': activeTab == 'spani'}">
+            <a @click="filter('spani')">
+              <span class="icon is-small">
+                <img src="../assets/spani-logo.png" alt="" srcset="">
+              </span>
+              <span>Spani</span>
+            </a>
+          </li>
+          <li :class="{'is-active': activeTab == 'nagumo'}">
+            <a @click="filter('nagumo')">
+              <span class="icon is-small">
+                <img src="../assets/nagumo-logo.png" alt="" srcset="">
+              </span>
+              <span>Nagumo</span>
+            </a>
+          </li>
         </ul>
       </div>
     </div>
