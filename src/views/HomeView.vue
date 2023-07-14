@@ -19,7 +19,7 @@ const fetchSpaniProducts = async (searchText: string): Promise<Product[]> => {
 
     let products: Product[] = [];
 
-    data.data.produtos.forEach(element => {
+    data.data.produtos.forEach((element: any) => {
         let product: Product = {
             id: element.produto_id,
             description: element.descricao,
@@ -54,7 +54,7 @@ const fetchNagumoProducts = async (searchText: string): Promise<Product[]> => {
 
     let products: Product[] = [];
 
-    data.products.forEach(element => {
+    data.products.forEach((element: any) => {
         let product: Product = {
             id: element.idProduct,
             description: element.excerpt,
