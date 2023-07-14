@@ -105,6 +105,7 @@ let results = ref<Product[] | null>(null);
 const searchText = ref('');
 const searchedText = ref('');
 const loading = ref(false)
+const activeTab = ref('')
 
 async function search() {
   console.log("Searching for " + searchText.value);
@@ -118,15 +119,15 @@ async function search() {
   searchedText.value = searchText.value
 
   filter('spani')
-  activeTab.value = 'spani'
 }
 
 let filteredResults = ref<Product[] | null>(null);
-let activeTab = ref('spani')
 
 function filter(vendor: string) {
   if (results.value) {
     filteredResults.value = results.value.filter((product) => product.vendor === vendor);
+
+    activeTab.value = vendor
   }
 }
 </script>
