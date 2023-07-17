@@ -8,4 +8,5 @@ export interface Product {
     image: string,
     vendor: string,
     accuracy?: number
+    selected: boolean
 }

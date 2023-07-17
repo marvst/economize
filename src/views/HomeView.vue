@@ -145,9 +145,6 @@ function filter(vendor: string) {
             <div class="column is-full-height">
               <input type="text" v-model="searchText" @keyup.enter="search" class="input is-normal" placeholder="Pesquise pelo nome do produto e aperte enter" />
             </div>
-            <!-- <div class="column">
-              <button class="button" @click="search">Pesquisar</button>
-            </div> -->
           </div>
         </div>
       </section>
